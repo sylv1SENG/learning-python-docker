@@ -3,7 +3,7 @@
 This project is about to learn how to manipulate different services and how each service is connecting to each other. 
 It is about manipulating differents topics and to discover : dockers and python
 
-What is the project : 
+<b>What is the project : </b>
 
 - Being able to create a python script which is connecting to an API and retrieve some data 
 - Being able to use Docker in order to : 
@@ -11,23 +11,19 @@ What is the project :
 ->  Connect the data warehouse and connect to a data lake in order to process the data there 
 -> Connect the data lake to a data viz tools to display graph 
 
-Resources : 
+<b>Resources : </b>
 Make sure your computer will be able to handle Docker 
 Make sure your computer is update for Docker and Anaconda 
 Make sure you have an API access : here the project is to manipulate a specific data from SEOLyzer
 
-Setup :  
-
+<b>Setup :  </b>
 
 1. Install Docker 
 For that, you have to go to Docker website and download the latest version of Docker 
 
-
 2. Minio : our data warehouse 
 
-Install Minio 
-
-From your terminal on MAC : 
+Install from your terminal on MAC : 
 
   docker run -p 38853:38853 \
   -e MINIO_ACCESS_KEY="coucoujetest123" \
@@ -41,7 +37,7 @@ NB :
 // -p 38853:38853 : indicate where is the different container web and API 
 
 
-From Docker compose file : 
+Install from From Docker compose file : 
 
 version: '3'
 services:
@@ -91,9 +87,9 @@ Step 4 : write_data_to_local_json : he is writing the data to a local file that 
 
 Run the script : upload_file_to_minio.py 
 
-7. Run docker compose file 
+7. Run docker compose file
 
-8 : Connect to Metabase in localhost 
+8. Connect to Metabase in localhost 
 
 Enjoy your graph 
 
