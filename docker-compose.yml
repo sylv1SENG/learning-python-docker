@@ -1,0 +1,61 @@
+version: '3'
+services:
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - "38853:38853" #Desktop
+      - "9000:9000"  #API
+    environment:
+      MINIO_ACCESS_KEY: coucoujetest123
+      MINIO_SECRET_KEY: cestmakeysecrete123
+      MINIO_CONSOLE_ADDRESS: :38853
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: adminadmin
+    command: server /data
+    volumes:
+      - ./resources:/data
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set myminio http://minio:9000 minioadmin minioadminpassword;
+      /usr/bin/mc admin info myminio;
+      /usr/bin/mc mb myminio/clickhouse;
+      /usr/bin/mc policy set public myminio/clickhouse;
+      exit 0;
+      "  
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse
+    environment:
+      CLICKHOUSE_DB: mydatabase
+      CLICKHOUSE_USER: myuser
+      CLICKHOUSE_PASSWORD: mypassword
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    volumes:
+      - ./resources/db:/var/lib/clickhouse  # created the db folder
+      # - ${PWD}/fs/volumes/clickhouse/etc/clickhouse-server/config.d/config.xml:/etc/clickhouse-server/config.d/config.xml
+      # - ${PWD}/fs/volumes/clickhouse/etc/clickhouse-server/users.d/users.xml:/etc/clickhouse-server/users.d/users.xml
+      # - ${PWD}/fs/volumes/clickhouse/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - '8123:8123' #API
+      - '9001:9001' #Desktop
+
+  metabase:
+    image: metabase/metabase:v0.47.2
+    container_name: metabase-with-clickhouse-driver
+    environment:
+      'MB_HTTP_TIMEOUT': '5000'
+    ports:
+      - '3000:3000'
+    volumes:
+ #     - '../../../resources/modules/clickhouse.metabase-driver.jar:/plugins/clickhouse.jar'
+      - '/Users/sylvainsengbandith/Desktop/python_simon2/resources/clickhouse.metabase-driver.jar:/plugins/clickhouse.jar'
+  #    - './.docker/clickhouse/single_node_tls/certificates/ca.crt:/certs/ca.crt'
+
+
