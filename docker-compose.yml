@@ -39,9 +39,6 @@ services:
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
     volumes:
       - ./resources/db:/var/lib/clickhouse  # created the db folder
-      # - ${PWD}/fs/volumes/clickhouse/etc/clickhouse-server/config.d/config.xml:/etc/clickhouse-server/config.d/config.xml
-      # - ${PWD}/fs/volumes/clickhouse/etc/clickhouse-server/users.d/users.xml:/etc/clickhouse-server/users.d/users.xml
-      # - ${PWD}/fs/volumes/clickhouse/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     ports:
       - '8123:8123' #API
       - '9001:9001' #Desktop
@@ -54,10 +51,5 @@ services:
     ports:
       - '3000:3000'
     volumes:
- #     - '../../../resources/modules/clickhouse.metabase-driver.jar:/plugins/clickhouse.jar'
       - '/Users/sylvainsengbandith/Desktop/python_simon2/resources/clickhouse.metabase-driver.jar:/plugins/clickhouse.jar'
-  #    - './.docker/clickhouse/single_node_tls/certificates/ca.crt:/certs/ca.crt'
-
-
-#comment
 
